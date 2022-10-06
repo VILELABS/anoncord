@@ -1,5 +1,10 @@
 const io = require('socket.io')(3000)
-
+const express = require('express')
+const app = express()
+app.use(express.static('public'))
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
+})
 const count = io.engine.clientsCount;
 
 const uuid = require("uuid");
@@ -9,7 +14,7 @@ io.engine.generateId = () => {
 }
 
 io.on("connection", (socket) => {
-    socket.data.username = "Anonymous " + io.engine.generateId();
+    socket.data.username = "Anon " + io.engine.generateId();
     socket.broadcast.emit("message", "Welcome to the chat, " + socket.data.username);
 }); // just a simple greeting
 
