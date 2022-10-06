@@ -4,14 +4,28 @@
 </head>
 <body>
     <h1>Anoncord</h1>
-    <button id="connect">Connect to the Chatroom</button>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script>
+    <button id="connect">Connect to the Chatroom</button>
+    <div class="messages">
+        <ul id="messages"></ul>
+    </div>
+    <input id="message"><input>
+    <button id="send">Send</button>
         var socket = io.connect('/server');
         var connectButton = document.getElementById('connect');
         connectButton.addEventListener('click', function() {
-            socket.emit('connectToChatroom', 'User-' + Math.floor(Math.random() * 1000));');
+            socket.emit('connection', 'User-Connect'));');
             ConnectButton.style.display = 'hidden';
+        });
+        var sendButton = document.getElementById('send');
+        sendButton.addEventListener('click', function() {
+            socket.emit('message', document.getElementById('message').value);
+        });
+        socket.on('message', function(data) {
+            var messages = document.getElementById('messages');
+            var message = document.createElement('li');
+            message.innerHTML = data;
+            messages.appendChild(message);
         });
     </script>
 </body>
