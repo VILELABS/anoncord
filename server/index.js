@@ -25,3 +25,6 @@ io.engine.on("connection_error", (err) => {
     console.log(err.context);  // some additional error context
 });
 
+app.listen(5000,() => {
+  console.log('Server is running on port 5000')
+})

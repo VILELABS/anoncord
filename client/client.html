@@ -11,14 +11,19 @@
     </div>
     <input id="message"><input>
     <button id="send">Send</button>
+    <script>
         var socket = io.connect('/server');
         var connectButton = document.getElementById('connect');
         connectButton.addEventListener('click', function() {
-            socket.emit('connection', 'User-Connect'));');
+            socket.emit('connection', 'User-Connect');
             ConnectButton.style.display = 'hidden';
         });
         var sendButton = document.getElementById('send');
         sendButton.addEventListener('click', function() {
+            var messages = document.getElementById('messages');
+            var message = document.createElement('li');
+            message.innerHTML = document.getElementById('message').value;
+            messages.appendChild(message);
             socket.emit('message', document.getElementById('message').value);
         });
         socket.on('message', function(data) {
